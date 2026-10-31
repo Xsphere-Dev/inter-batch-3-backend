@@ -3,16 +3,8 @@ const express = require("express");
 const router = express.Router();
 
 const db = require("../db/db");
+const { userController } = require("../controllers");
 
-router.get("/", (req, res) => {
-  res.json([
-    {
-      name: "mgmg",
-    },
-    {
-      name: "agag",
-    },
-  ]);
-});
+router.get("/register", userController.register);
 
 module.exports = router;
