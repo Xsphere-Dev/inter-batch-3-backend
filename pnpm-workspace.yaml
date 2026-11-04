@@ -1,0 +1,11 @@
+allowBuilds:
+  esbuild: true
+  sqlite3: true
+  workerd: true
+minimumReleaseAgeExclude:
+  - prisma@8.0.0-rc.30
+permissions:
+  '@prisma/orm-postgres':
+    skills: true
+  prisma:
+    skills: true
