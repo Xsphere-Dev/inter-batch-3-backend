@@ -1,0 +1,54 @@
+// use prisma-8
+
+model User {
+  id        Int                @id @default(autoincrement())
+  phone     String
+  username  String
+  email     String
+  password  String
+  age       Int
+  createdAt DateTime           @default(now()) @onCreate(now())
+  updatedAt temporal.UpdatedAt
+}
+
+model Admin {
+  id        Int                @id @default(autoincrement())
+  phone     String
+  username  String
+  email     String
+  password  String
+  createdAt DateTime           @default(now()) @onCreate(now())
+  updatedAt temporal.UpdatedAt
+}
+
+
+model Bus {
+  id            Int                @id @default(autoincrement())
+  car_no        Int
+  seat_capacity Int
+  seat_no       String[]
+  createdAt     DateTime           @default(now()) @onCreate(now())
+  updatedAt     temporal.UpdatedAt
+}
+
+model BusSchedule {
+  id                  Int                @id @default(autoincrement())
+  bus_id              Int
+  bus                 Bus                @relation(references: [id], fields: [bus_id], onDelete: Cascade)
+  depart_time         DateTime
+  est_arrival_time    DateTime
+  per_seat_cost       Int
+  updatedAt           temporal.UpdatedAt
+}
+
+
+model Ticket {
+  id                  Int                @id @default(autoincrement())
+  bus_schedule_id     Int
+  busSchedule         BusSchedule         @relation(references: [id], fields: [bus_schedule_id], onDelete: Cascade)
+  user_id             Int
+  user                User                @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  occupied_seat       Int
+  total_amount        Int
+  updatedAt           temporal.UpdatedAt
+}
