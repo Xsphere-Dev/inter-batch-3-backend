@@ -25,14 +25,10 @@ const findOne = async (identitfier: string) => {
 
 
 // user create
-const createUser = async (phone_number: string, username: string, email: string, password: string,age:number) =>
+const createUser = async (phone: string, username: string, email: string, password: string,age:number) =>
 {
-
-  const u = await db.orm.public.User.first();
-  console.log(u)
-
   const user = await db.orm.public.User.create({
-    phone: phone_number,
+    phone,
     username,
     email,
     password,

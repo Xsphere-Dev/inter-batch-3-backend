@@ -40,9 +40,9 @@ const findOne = async (req: Request, res: Response) => {
 const createUser = async (req: Request, res: Response) =>
 {
   try {
-    const { phone_number,username,email,password,age } = req.body;
-    const user = await userService.createUser(phone_number, username, email, password, age);
-    res.status(201).json(user)
+    const { phone,username,email,password,age } = req.body;
+    const user = await userService.createUser(phone, username, email, password, age);
+    res.status(201).json("User create success!");
   } catch (error:any) {
     res.status(500).json({error:error.message})
   }
