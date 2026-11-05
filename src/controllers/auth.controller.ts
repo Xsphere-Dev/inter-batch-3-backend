@@ -2,8 +2,6 @@ import { Request, Response } from "express";
 import { userService } from "../services";
 
 const register = async (req: Request, res: Response) => {
-  console.log(req.body);
-
   //find user -> user-service
   const existUser = await userService.findOne(req.body.email);
 
