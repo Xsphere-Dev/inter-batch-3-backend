@@ -2,7 +2,14 @@ import { NextFunction } from "express";
 import { body, param, validationResult } from "express-validator";
 
 const registerValidator = [
+  // phone, username, email, password, age
   body("username").trim().notEmpty().withMessage("Username is required"),
+
+  body("phone")
+    .trim()
+    .notEmpty()
+    .withMessage("Phone is required")
+    .withMessage("Invalid phone address"),
 
   body("email")
     .trim()
@@ -11,11 +18,16 @@ const registerValidator = [
     .isEmail()
     .withMessage("Invalid email address"),
 
+  body("age")
+    .notEmpty()
+    .withMessage("Age is required")
+    .isNumeric()
+    .withMessage("Age must be number!"),
+
   body("password")
     .isLength({ min: 8 })
     .withMessage("Password must be at least 8 characters"),
 ];
-
 
 const validateId = [
   param("id")
@@ -50,7 +62,7 @@ const createUserValidator = [
   body("password")
     .notEmpty()
     .withMessage("Password is required")
-    .isLength({ min:  6})
+    .isLength({ min: 6 })
     .withMessage("Password must be at least 6 characters"),
 
   body("age")
@@ -67,10 +79,7 @@ const findOneValidator = [
     .isEmail()
     .withMessage("Invalid email address"),
 
-  body("phone")
-    .optional()
-    .trim()
-    .withMessage("Invalid phone number")
+  body("phone").optional(),
 ];
 
 const updateUserValidator = [
@@ -82,10 +91,7 @@ const updateUserValidator = [
     .isLength({ min: 3, max: 24 })
     .withMessage("username must be between 3 and 24 characters"),
 
-  body("phone")
-    .optional()
-    .trim()
-    .withMessage("Invalid phone number"),
+  body("phone").optional(),
 
   body("email")
     .optional()
@@ -106,7 +112,6 @@ const updateUserValidator = [
 ];
 
 const deleteUserValidator = [...validateId];
-
 
 export {
   registerValidator,

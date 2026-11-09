@@ -1,6 +1,7 @@
 import { or } from "@prisma/orm-postgres/orm-client";
 import { db } from "../prisma/db";
 import { ICreateUserPayload, IFindOneUser } from "../types/user.type";
+import bcrypt from "bcryptjs";
 
 // get user
 
@@ -12,25 +13,27 @@ const getUser = async () => {
 // get unique user
 
 const getUniqueUser = async (id: number) => {
-  const user = await db.orm.public.User.where({ id }).all();
+  const user = await db.orm.public.User.where({ id }).first();
   return user;
 };
 
 //  idy would be email or phone
 const findWithEmailOrPhone = async (identity: IFindOneUser) => {
-  const user = await db.orm.public.User.where((u) => or(u.email.eq(identity.email),u.phone.eq(identity.phone))).all();
+  const user = await db.orm.public.User.where((u) =>
+    or(u.email.eq(identity.email), u.phone.eq(identity.phone)),
+  ).first();
   return user;
 };
 
 // user create
 const createUser = async (data: ICreateUserPayload) => {
   const { phone, username, email, password, age } = data;
-
+  const hashedPassword = await bcrypt.hash(password, 10);
   const user = await db.orm.public.User.create({
     phone,
     username,
     email,
-    password,
+    password: hashedPassword,
     age,
   });
   return user;
