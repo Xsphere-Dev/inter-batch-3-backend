@@ -3,6 +3,7 @@ import { db } from "../prisma/db";
 import { ICreateUserPayload, IFindOneUser } from "../types/user.type";
 import bcrypt from "bcryptjs";
 
+
 // get user
 
 const getUser = async () => {
@@ -18,9 +19,9 @@ const getUniqueUser = async (id: number) => {
 };
 
 //  idy would be email or phone
-const findWithEmailOrPhone = async (identity: IFindOneUser) => {
+const findWithEmailOrPhone = async (identity: string) => {
   const user = await db.orm.public.User.where((u) =>
-    or(u.email.eq(identity.email), u.phone.eq(identity.phone)),
+    or(u.email.eq(identity), u.phone.eq(identity)),
   ).first();
   return user;
 };

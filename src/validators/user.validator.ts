@@ -72,6 +72,16 @@ const createUserValidator = [
     .withMessage("Age must be between 18 and 110"),
 ];
 
+const loginValidator = [
+  body("email")
+    .trim()
+    .notEmpty()
+    .withMessage("Invalid email address"),
+  body("password")
+    .isLength({ min: 8 })
+    .withMessage("Password must be at least 8 characters"),
+]
+
 const findOneValidator = [
   body("email")
     .optional()
@@ -120,4 +130,5 @@ export {
   findOneValidator,
   updateUserValidator,
   deleteUserValidator,
+  loginValidator,
 };

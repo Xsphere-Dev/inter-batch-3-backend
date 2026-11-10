@@ -27,7 +27,7 @@ const getUniqueUser = async (req: Request, res: Response) => {
 };
 
 const findWithEmailOrPhone = async (req: Request, res: Response) => {
-  const userInfo = req.body as IFindOneUser;
+  const userInfo = req.body as string;
   const findOneUser = await userService.findWithEmailOrPhone(userInfo);
   res.status(200).json(findOneUser);
 };
