@@ -69,6 +69,18 @@ const deleteAdmin = async (id: number) => {
 
 // delete admin close
 
+
+// get bus list
+
+const getBusList = async () =>
+{
+  const busList = await db.orm.public.Bus.all();
+  return busList;
+}
+
+// get bus list close
+
+
 // create bus
 const createBus = async (data: ICreateBusPayLoad)=>{
   const { car_no, seat_no, seat_capacity } = data;
@@ -101,7 +113,17 @@ const createBusSchedule = async (data: ICreateBusSchedulePayLoad) =>
   return schedule;
 }
 
-// create bus schedule closexxx
+// create bus schedule close
+
+// get bus schedule
+
+const getBusSchedule = async () =>
+{
+  const getSchedule = await db.orm.public.BusSchedule.all();
+  return getSchedule;
+}
+
+// get bus schedule close
 
 export default {
   findWithEmailOrPhone,
@@ -112,4 +134,6 @@ export default {
   deleteAdmin,
   createBus,
   createBusSchedule,
+  getBusList,
+  getBusSchedule,
 };

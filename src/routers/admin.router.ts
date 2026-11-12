@@ -16,7 +16,8 @@ adminRouter.patch("/update/:id",validate(...updateUserValidator), adminControlle
 adminRouter.delete("/delete/:id", validate(...deleteUserValidator), adminController.deleteAdmin);
 adminRouter.post("/bus/create", validate(...createBusValidator), authenticateToken, adminController.createBus)
 adminRouter.post("/bus/schedule/create",validate(...createBusScheduleValidator),authenticateToken,adminController.createBusSchedule)
-
+adminRouter.get("/bus/list", adminController.getBusList);
+adminRouter.get("/bus/schedule", adminController.getBusSchedule);
 
 
 export default adminRouter

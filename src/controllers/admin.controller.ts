@@ -126,6 +126,27 @@ const createBusSchedule = async (req: Request, res:Response) =>
   }
 }
 
+// get bus list
+
+const getBusList = async (req: Request, res: Response) =>
+{
+  const busList = await adminService.getBusList();
+  res.status(200).json(busList);
+}
+
+// get bus list close
+
+// get bus schedule
+
+const getBusSchedule = async (req:Request,res:Response) =>
+{
+  const getSchedule = await adminService.getBusSchedule();
+  res.status(200).json(getBusSchedule);
+}
+
+
+//get bus schedule close
+
 export default {
   findWithEmailOrPhone,
   createAdmin,
@@ -135,4 +156,6 @@ export default {
   deleteAdmin,
   createBus,
   createBusSchedule,
+  getBusList,
+  getBusSchedule,
 };
