@@ -6,6 +6,7 @@ export interface ICreateUserPayload extends IFindOneUser {
   age: number;
 }
 
+
 export interface IFindOneUser {
   phone: string;
   email: string;

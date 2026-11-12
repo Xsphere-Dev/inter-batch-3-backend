@@ -79,6 +79,18 @@ const updateAdminValidator = [
     .withMessage("Password must be at least 6 characters"),
 ];
 
+const createBusValidator = [
+  body('car_no').notEmpty().withMessage("enter car number."),
+  body("seat_capacity").notEmpty().withMessage("enter seat capacity"),
+  body("seat_no").notEmpty().withMessage("enter seat number"),
+]
+
+const createBusScheduleValidator = [
+  body("bus_id").notEmpty().withMessage("bus id must enter"),
+  body("depart_time").notEmpty().withMessage("depart must be enter"),
+  body("est_arrival_time").notEmpty().withMessage("est time must be enter"),
+  body("per_seat_cost").notEmpty().withMessage("per seat cost must be enter"),
+]
 const deleteAdminValidator = [...validateId];
 
 export {
@@ -86,4 +98,6 @@ export {
   createAdminValidator,
   updateAdminValidator,
   deleteAdminValidator,
+  createBusValidator,
+  createBusScheduleValidator,
 };

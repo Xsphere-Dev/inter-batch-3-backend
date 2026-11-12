@@ -2,6 +2,7 @@ import { or } from "@prisma/orm-postgres/orm-client";
 import { db } from "../prisma/db";
 import { ICreateUserPayload, IFindOneUser } from "../types/user.type";
 import bcrypt from "bcryptjs";
+import { ICreateBusPayLoad, ICreateBusSchedulePayLoad } from "../types/admin.type";
 
 
 // get Admin
@@ -66,6 +67,42 @@ const deleteAdmin = async (id: number) => {
   return admin;
 };
 
+// delete admin close
+
+// create bus
+const createBus = async (data: ICreateBusPayLoad)=>{
+  const { car_no, seat_no, seat_capacity } = data;
+  const bus = await db.orm.public.Bus.create({
+    car_no,
+    seat_no,
+    seat_capacity
+  });
+  return bus;
+}
+
+// create bus close
+
+// create bus schedule
+
+const createBusSchedule = async (data: ICreateBusSchedulePayLoad) =>
+{
+  const {
+    bus_id,
+    depart_time,
+    est_arrival_time,
+    per_seat_cost } = data;
+  
+  const schedule = await db.orm.public.BusSchedule.create({
+    bus_id,
+    depart_time,
+    est_arrival_time,
+    per_seat_cost
+  });
+  return schedule;
+}
+
+// create bus schedule closexxx
+
 export default {
   findWithEmailOrPhone,
   createAdmin,
@@ -73,4 +110,6 @@ export default {
   getUniqueAdmin,
   updateAdmin,
   deleteAdmin,
+  createBus,
+  createBusSchedule,
 };
