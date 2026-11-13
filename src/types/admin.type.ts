@@ -1,5 +1,5 @@
 export interface ICreateBusPayLoad {
-  car_no: number;
+  car_no: string;
   seat_capacity: number;
   seat_no: string[];
 }

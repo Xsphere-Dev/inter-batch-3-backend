@@ -95,16 +95,40 @@ const createBus = async (data: ICreateBusPayLoad) => {
 
 // create bus schedule
 
+const isScheduled = async (
+  bus_id: number,
+  departTime: Date,
+  estArrivalTime: Date,
+  perSeatCost: number,
+) => {
+  const st_time = await db.orm.public.BusSchedule.where({ bus_id }).first();
+  const ed_time = await db.orm.public.BusSchedule.where({ bus_id }).first();
+
+  if (
+    st_time &&
+    ed_time &&
+    st_time.depart_time >= departTime &&
+    ed_time.est_arrival_time <= estArrivalTime
+  ) {
+    const schedule = await db.orm.public.BusSchedule.create({
+      bus_id,
+      depart_time: departTime,
+      est_arrival_time: estArrivalTime,
+      per_seat_cost: perSeatCost,
+    });
+
+    return schedule;
+  }
+
+  return JSON.parse("Schedule is already created");
+};
+
 const createBusSchedule = async (data: ICreateBusSchedulePayLoad) => {
   const { bus_id, depart_time, est_arrival_time, per_seat_cost } = data;
+  const departTime = new Date(depart_time);
+  const estArrivalTime = new Date(est_arrival_time);
 
-  const schedule = await db.orm.public.BusSchedule.create({
-    bus_id,
-    depart_time: new Date(depart_time),
-    est_arrival_time: new Date(est_arrival_time),
-    per_seat_cost,
-  });
-  return schedule;
+  return isScheduled(bus_id, departTime, estArrivalTime, per_seat_cost);
 };
 
 // create bus schedule close
@@ -139,7 +163,12 @@ const updateBusSchedule = async (
 ) => {
   const updateBusSchedule = await db.orm.public.BusSchedule.where({
     id,
-  }).update(data);
+  }).update({
+    bus_id: data.bus_id,
+    depart_time: new Date(data.depart_time),
+    est_arrival_time: new Date(data.est_arrival_time),
+    per_seat_cost: data.per_seat_cost
+  });
   return updateBusSchedule;
 };
 
