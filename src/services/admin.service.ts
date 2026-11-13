@@ -129,7 +129,11 @@ const getBusSchedule = async () =>
 
 const updateBus = async (id: number, data: ICreateBusPayLoad) =>
 {
-  const updateBus = await db.orm.public.Bus.where({ id }).update(data);
+  const updateBus = await db.orm.public.Bus.where({ id }).update({
+    car_no: data.car_no,
+    seat_no: data.seat_no,
+    seat_capacity: data.seat_capacity
+  });
   return updateBus;
 }
 

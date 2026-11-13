@@ -95,12 +95,17 @@ const deleteAdminValidator = [...validateId];
 
 const updateBusValidator = [
   ...validateId,
-  ...createBusValidator,
+  body("car_no").optional().trim().isNumeric().withMessage("car numb must be number"),
+  body("seat_capacity").optional(),
+  body("seat_no").optional(),
 ]
 
 const updateBusScheduleValidator = [
   ...validateId,
-  ...createBusScheduleValidator,
+  body("bus_id").optional(),
+  body("depart_time").optional(),
+  body("est_arrival_time").optional(),
+  body("per_seat_cost").optional(),
 ]
 
 const deleteBusValidator = [

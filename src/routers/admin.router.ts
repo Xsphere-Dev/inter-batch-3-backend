@@ -16,12 +16,12 @@ adminRouter.patch("/update/:id",validate(...updateUserValidator), adminControlle
 adminRouter.delete("/delete/:id", validate(...deleteUserValidator), adminController.deleteAdmin);
 adminRouter.post("/bus/create", validate(...createBusValidator), authenticateToken, adminController.createBus)
 adminRouter.post("/bus/schedule/create",validate(...createBusScheduleValidator),authenticateToken,adminController.createBusSchedule)
-adminRouter.get("/bus/list", adminController.getBusList);
-adminRouter.get("/bus/schedule", adminController.getBusSchedule);
-adminRouter.patch("/bus/update", validate(...updateBusValidator), authenticateToken, adminController.updateBus);
-adminRouter.patch("/bus/schedule/update", validate(...updateBusScheduleValidator), authenticateToken, adminController.updateBusSchedule);
-adminRouter.delete("/bus/delete", validate(...deleteBusValidator), authenticateToken, adminController.deleteBus);
-adminRouter.delete("/bus/schedule/delete", validate(...deleteBusScheduleValidator), authenticateToken, adminController.deleteBusSchedule);
+adminRouter.get("/bus/list",authenticateToken, adminController.getBusList);
+adminRouter.get("/bus/schedule",authenticateToken, adminController.getBusSchedule);
+adminRouter.patch("/bus/update/:id", validate(...updateBusValidator), authenticateToken, adminController.updateBus);
+adminRouter.patch("/bus/schedule/update/:id", validate(...updateBusScheduleValidator), authenticateToken, adminController.updateBusSchedule);
+adminRouter.delete("/bus/delete/:id", validate(...deleteBusValidator), authenticateToken, adminController.deleteBus);
+adminRouter.delete("/bus/schedule/delete/:id", validate(...deleteBusScheduleValidator), authenticateToken, adminController.deleteBusSchedule);
 
 
 export default adminRouter
