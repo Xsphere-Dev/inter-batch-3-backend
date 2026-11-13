@@ -1,0 +1,52 @@
+[
+  {
+    "id": "alterType.Bus.car_no",
+    "label": "Alter type of \"Bus\".\"car_no\" to text",
+    "operationClass": "widening",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "car_no",
+        "table": "Bus"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"car_no\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Bus",
+          "car_no"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"car_no\" on \"Bus\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "alter type of \"car_no\" to text",
+        "sql": "ALTER TABLE \"public\".\"Bus\" ALTER COLUMN \"car_no\" TYPE text USING \"car_no\"::text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"car_no\" has type \"text\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "Bus",
+          "car_no",
+          "text"
+        ]
+      }
+    ],
+    "meta": {
+      "warning": "TABLE_REWRITE"
+    }
+  }
+]

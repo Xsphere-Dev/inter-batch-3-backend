@@ -2,8 +2,10 @@ import { or } from "@prisma/orm-postgres/orm-client";
 import { db } from "../prisma/db";
 import { ICreateUserPayload, IFindOneUser } from "../types/user.type";
 import bcrypt from "bcryptjs";
-import { ICreateBusPayLoad, ICreateBusSchedulePayLoad } from "../types/admin.type";
-
+import {
+  ICreateBusPayLoad,
+  ICreateBusSchedulePayLoad,
+} from "../types/admin.type";
 
 // get Admin
 
@@ -69,103 +71,95 @@ const deleteAdmin = async (id: number) => {
 
 // delete admin close
 
-
 // get bus list
 
-const getBusList = async () =>
-{
+const getBusList = async () => {
   const busList = await db.orm.public.Bus.all();
   return busList;
-}
+};
 
 // get bus list close
 
-
 // create bus
-const createBus = async (data: ICreateBusPayLoad)=>{
+const createBus = async (data: ICreateBusPayLoad) => {
   const { car_no, seat_no, seat_capacity } = data;
   const bus = await db.orm.public.Bus.create({
     car_no,
     seat_no,
-    seat_capacity
+    seat_capacity,
   });
   return bus;
-}
+};
 
 // create bus close
 
 // create bus schedule
 
-const createBusSchedule = async (data: ICreateBusSchedulePayLoad) =>
-{
-  const {
-    bus_id,
-    depart_time,
-    est_arrival_time,
-    per_seat_cost } = data;
-  
+const createBusSchedule = async (data: ICreateBusSchedulePayLoad) => {
+  const { bus_id, depart_time, est_arrival_time, per_seat_cost } = data;
+
   const schedule = await db.orm.public.BusSchedule.create({
     bus_id,
-    depart_time,
-    est_arrival_time,
-    per_seat_cost
+    depart_time: new Date(depart_time),
+    est_arrival_time: new Date(est_arrival_time),
+    per_seat_cost,
   });
   return schedule;
-}
+};
 
 // create bus schedule close
 
 // get bus schedule
 
-const getBusSchedule = async () =>
-{
+const getBusSchedule = async () => {
   const getSchedule = await db.orm.public.BusSchedule.all();
   return getSchedule;
-}
+};
 
 // get bus schedule close
 
 // update bus
 
-const updateBus = async (id: number, data: ICreateBusPayLoad) =>
-{
+const updateBus = async (id: number, data: ICreateBusPayLoad) => {
   const updateBus = await db.orm.public.Bus.where({ id }).update({
     car_no: data.car_no,
     seat_no: data.seat_no,
-    seat_capacity: data.seat_capacity
+    seat_capacity: data.seat_capacity,
   });
   return updateBus;
-}
+};
 
 // update bus close
 
 // update bus schedule
 
-const updateBusSchedule = async (id: number, data: ICreateBusSchedulePayLoad) =>
-{
-  const updateBusSchedule = await db.orm.public.BusSchedule.where({ id }).update(data);
+const updateBusSchedule = async (
+  id: number,
+  data: ICreateBusSchedulePayLoad,
+) => {
+  const updateBusSchedule = await db.orm.public.BusSchedule.where({
+    id,
+  }).update(data);
   return updateBusSchedule;
-}
+};
 
 // update bus schedule
 
 // delete bus
 
-const deleteBus = async (id: number) =>
-{
+const deleteBus = async (id: number) => {
   const deleteBus = await db.orm.public.Bus.where({ id }).delete();
   return deleteBus;
-}
+};
 
 // delete bus close
 
-// delete bus schedule 
+// delete bus schedule
 
-const deleteBusSchedule = async (id: number) =>
-{
+const deleteBusSchedule = async (id: number) => {
   const deleteBusSchedule = await db.orm.public.Bus.where({ id }).delete();
   return deleteBusSchedule;
-}
+};
 
 // delete bus schedule close
 

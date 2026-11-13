@@ -24,7 +24,7 @@ model Admin {
 
 model Bus {
   id            Int                @id @default(autoincrement())
-  car_no        Int
+  car_no        String
   seat_capacity Int
   seat_no       String[]
   createdAt     DateTime           @default(now()) @onCreate(now())

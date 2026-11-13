@@ -121,7 +121,7 @@
               "car_no": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/int4@1",
+                  "codecId": "pg/text@1",
                   "kind": "scalar"
                 }
               },
@@ -577,8 +577,8 @@
               ],
               "columns": {
                 "car_no": {
-                  "codecId": "pg/int4@1",
-                  "dataType": "pg/int4",
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
                   "nullable": false
                 },
                 "createdAt": {
@@ -897,7 +897,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "18aca1d6e7f752885dddee659d615452e4c4b2a03e2a3f641a8e8a8482324629"
+    "storageHash": "62afa931661a53ab72e8c22d25e7058ea6a4baa5c463b9b7266d262454c84d59"
   },
   "execution": {
     "executionHash": "3ff6d3fb6b889aeb54a7c8df15115271f8a026b0f08e373b85ae1fda512ab336",
