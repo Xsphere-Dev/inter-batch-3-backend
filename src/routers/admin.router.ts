@@ -3,7 +3,7 @@ const adminRouter = express.Router();
 import { validate } from "../middlewares/validate.middleware";
 import { createUserValidator, deleteUserValidator, findOneValidator, updateUserValidator, validateId } from "../validators/user.validator";
 import adminController from "../controllers/admin.controller";
-import { createBusScheduleValidator, createBusValidator } from "../validators/admin.validator";
+import { createBusScheduleValidator, createBusValidator, deleteBusScheduleValidator, deleteBusValidator, updateBusScheduleValidator, updateBusValidator } from "../validators/admin.validator";
 import { authenticateToken } from "../middlewares/authMiddleware";
 
 
@@ -18,6 +18,10 @@ adminRouter.post("/bus/create", validate(...createBusValidator), authenticateTok
 adminRouter.post("/bus/schedule/create",validate(...createBusScheduleValidator),authenticateToken,adminController.createBusSchedule)
 adminRouter.get("/bus/list", adminController.getBusList);
 adminRouter.get("/bus/schedule", adminController.getBusSchedule);
+adminRouter.patch("/bus/update", validate(...updateBusValidator), authenticateToken, adminController.updateBus);
+adminRouter.patch("/bus/schedule/update", validate(...updateBusScheduleValidator), authenticateToken, adminController.updateBusSchedule);
+adminRouter.delete("/bus/delete", validate(...deleteBusValidator), authenticateToken, adminController.deleteBus);
+adminRouter.delete("/bus/schedule/delete", validate(...deleteBusScheduleValidator), authenticateToken, adminController.deleteBusSchedule);
 
 
 export default adminRouter

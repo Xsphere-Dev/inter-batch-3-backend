@@ -144,8 +144,74 @@ const getBusSchedule = async (req:Request,res:Response) =>
   res.status(200).json(getBusSchedule);
 }
 
-
 //get bus schedule close
+
+// update bus
+
+const updateBus = async (req: Request, res: Response) =>
+{
+  try {
+    const id = Number(req.params.id);
+    const body = req.body as ICreateBusPayLoad;
+    const updateBus = await adminService.updateBus(id, body);
+    console.log(updateBus)
+  res.status(201).json("updated successful!");
+  } catch (error:any) {
+    res.status(500).json({error: error.message})
+  }
+}
+
+// update bus close
+
+// update bus schedule
+
+const updateBusSchedule = async (req: Request, res: Response) =>
+{
+  try
+  {
+    const id = Number(req.params.id);
+    const body = req.body as ICreateBusSchedulePayLoad;
+    const updateBusSchedule = await adminService.updateBusSchedule(id, body);
+    console.log(updateBusSchedule);
+  res.status(201).json("updated successful");
+  } catch (error:any) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+// update bus schedule close
+
+// delete bus
+
+const deleteBus = async (req: Request, res: Response) =>
+{
+  try {
+    const id = Number(req.params.id);
+    const deleteBus = await adminService.deleteBus(id);
+    console.log(deleteBus);
+    res.status(200).json("delete successful");
+  } catch (error:any) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+// delete bus close
+
+// delete bus
+
+const deleteBusSchedule = async (req: Request, res: Response) =>
+{
+  try {
+    const id = Number(req.params.id);
+    const deleteBusSchedule = await adminService.deleteBusSchedule(id);
+    console.log(deleteBusSchedule);
+    res.status(200).json("delete successful");
+  } catch (error:any) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+// delete bus close
 
 export default {
   findWithEmailOrPhone,
@@ -158,4 +224,8 @@ export default {
   createBusSchedule,
   getBusList,
   getBusSchedule,
+  updateBus,
+  updateBusSchedule,
+  deleteBus,
+  deleteBusSchedule,
 };

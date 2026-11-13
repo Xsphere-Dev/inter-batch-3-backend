@@ -125,6 +125,46 @@ const getBusSchedule = async () =>
 
 // get bus schedule close
 
+// update bus
+
+const updateBus = async (id: number, data: ICreateBusPayLoad) =>
+{
+  const updateBus = await db.orm.public.Bus.where({ id }).update(data);
+  return updateBus;
+}
+
+// update bus close
+
+// update bus schedule
+
+const updateBusSchedule = async (id: number, data: ICreateBusSchedulePayLoad) =>
+{
+  const updateBusSchedule = await db.orm.public.BusSchedule.where({ id }).update(data);
+  return updateBusSchedule;
+}
+
+// update bus schedule
+
+// delete bus
+
+const deleteBus = async (id: number) =>
+{
+  const deleteBus = await db.orm.public.Bus.where({ id }).delete();
+  return deleteBus;
+}
+
+// delete bus close
+
+// delete bus schedule 
+
+const deleteBusSchedule = async (id: number) =>
+{
+  const deleteBusSchedule = await db.orm.public.Bus.where({ id }).delete();
+  return deleteBusSchedule;
+}
+
+// delete bus schedule close
+
 export default {
   findWithEmailOrPhone,
   createAdmin,
@@ -136,4 +176,8 @@ export default {
   createBusSchedule,
   getBusList,
   getBusSchedule,
+  updateBus,
+  updateBusSchedule,
+  deleteBus,
+  deleteBusSchedule,
 };

@@ -93,6 +93,24 @@ const createBusScheduleValidator = [
 ]
 const deleteAdminValidator = [...validateId];
 
+const updateBusValidator = [
+  ...validateId,
+  ...createBusValidator,
+]
+
+const updateBusScheduleValidator = [
+  ...validateId,
+  ...createBusScheduleValidator,
+]
+
+const deleteBusValidator = [
+  ...validateId
+]
+
+const deleteBusScheduleValidator = [
+  ...validateId
+]
+
 export {
   registerAdminValidator,
   createAdminValidator,
@@ -100,4 +118,8 @@ export {
   deleteAdminValidator,
   createBusValidator,
   createBusScheduleValidator,
+  updateBusValidator,
+  updateBusScheduleValidator,
+  deleteBusValidator,
+  deleteBusScheduleValidator,
 };
