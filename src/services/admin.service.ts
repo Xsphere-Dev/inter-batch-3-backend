@@ -99,10 +99,13 @@ const isScheduled = async (
   bus_id: number,
   departTime: Date,
   estArrivalTime: Date,
-  perSeatCost: number,
-) => {
-  const st_time = await db.orm.public.BusSchedule.where({ bus_id }).first();
-  const ed_time = await db.orm.public.BusSchedule.where({ bus_id }).first();
+) =>
+{ 
+
+  const [st_time, ed_time] = await Promise.all([
+     db.orm.public.BusSchedule.where({ bus_id }).first(),
+     db.orm.public.BusSchedule.where({ bus_id }).first()
+  ])
 
   if (
     st_time &&
@@ -110,17 +113,16 @@ const isScheduled = async (
     st_time.depart_time >= departTime &&
     ed_time.est_arrival_time <= estArrivalTime
   ) {
-    const schedule = await db.orm.public.BusSchedule.create({
-      bus_id,
-      depart_time: departTime,
-      est_arrival_time: estArrivalTime,
-      per_seat_cost: perSeatCost,
-    });
+    // const schedule = await db.orm.public.BusSchedule.create({
+    //   bus_id,
+    //   depart_time: departTime,
+    //   est_arrival_time: estArrivalTime,
+    //   per_seat_cost: perSeatCost,
+    // });
 
-    return schedule;
+    return true;
   }
-
-  return JSON.parse("Schedule is already created");
+  return false;
 };
 
 const createBusSchedule = async (data: ICreateBusSchedulePayLoad) => {
@@ -128,7 +130,16 @@ const createBusSchedule = async (data: ICreateBusSchedulePayLoad) => {
   const departTime = new Date(depart_time);
   const estArrivalTime = new Date(est_arrival_time);
 
-  return isScheduled(bus_id, departTime, estArrivalTime, per_seat_cost);
+  const isExisted = await isScheduled(bus_id, departTime, estArrivalTime);
+  if (isExisted === true) return JSON.parse("Bus Schedule is already existed");
+  const schedule = await db.orm.public.BusSchedule.create({
+      bus_id,
+      depart_time: departTime,
+      est_arrival_time: estArrivalTime,
+      per_seat_cost: per_seat_cost,
+  });
+  return schedule;
+
 };
 
 // create bus schedule close
