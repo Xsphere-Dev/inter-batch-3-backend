@@ -1,6 +1,6 @@
 import { or } from "@prisma/orm-postgres/orm-client";
 import { db } from "../prisma/db";
-import { ICreateUserPayload, IFindOneUser } from "../types/user.type";
+import { ICreateSeat, ICreateUserPayload, IFindOneUser } from "../types/user.type";
 import bcrypt from "bcryptjs";
 
 
@@ -69,6 +69,45 @@ const deleteUser = async (id: number) => {
   return user;
 };
 
+// delete user close
+
+// user book ticket
+
+const seatCheck = async (car_no: string, seat_capacity: number, seat_no: string[]) =>
+{
+  const [seatCheck, seatCount] = await Promise.all([
+    await db.orm.public.Bus.where({
+    car_no
+    }).first(),
+    await db.orm.public.Bus.where({
+    car_no
+  }).first(),
+  ])
+  if (
+    seatCount &&
+    seatCheck &&
+    seatCheck?.seat_no === seat_no && (seatCount?.seat_capacity >= seat_capacity || seatCount?.seat_capacity <= seat_capacity))
+  {
+    return true;
+  }
+  return false;
+}
+
+const bookSeat = async (id: number, data: ICreateSeat ) =>
+{
+  const { car_no, seat_capacity, seat_no } = data;
+  const isAvailableSeat = await seatCheck(car_no, seat_capacity, seat_no);
+  if (isAvailableSeat === true) return JSON.parse("Seat can't available!.");
+  const bookingSeat = await db.orm.public.Bus.create({
+    car_no,
+    seat_capacity,
+    seat_no
+  });
+  return bookingSeat;
+}
+
+// user book ticket close
+
 export default {
   findWithEmailOrPhone,
   createUser,
@@ -76,4 +115,5 @@ export default {
   getUniqueUser,
   updateUser,
   deleteUser,
+  bookSeat,
 };

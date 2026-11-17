@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { request } from "node:http";
 import { userService } from "../services";
-import { ICreateUserPayload, IFindOneUser } from "../types/user.type";
+import { ICreateSeat, ICreateUserPayload, IFindOneUser } from "../types/user.type";
 
 const getUser = async (req: Request, res: Response) => {
   try {
@@ -61,6 +61,23 @@ const deleteUser = async (req: Request, res: Response) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// user book ticket
+
+const bookSeat = async (req: Request, res: Response) =>
+{
+  try {
+    const userId = Number(req.params);
+    const body = req.body as ICreateSeat;
+    const bookingSeat = await userService.bookSeat(userId, body);
+    console.log(bookingSeat);
+    res.status(201).json("Seat book successfully.");
+  } catch (error:any) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+// user book ticket close
 export default {
   findWithEmailOrPhone,
   createUser,
@@ -68,4 +85,5 @@ export default {
   getUniqueUser,
   updateUser,
   deleteUser,
+  bookSeat,
 };

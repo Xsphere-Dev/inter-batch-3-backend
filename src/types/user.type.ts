@@ -28,8 +28,15 @@ export interface RefreshTokenPayload {
   userId: number;
   role: "user" | "admin";
 }
+export interface ICreateSeat
+{
+  car_no: string;
+  seat_capacity: number;
+  seat_no: string[];
+}
 
 // Extend Express Request to include authenticated user info
 export interface AuthenticatedRequest extends Request {
   user?: AccessTokenPayload;
 }
+

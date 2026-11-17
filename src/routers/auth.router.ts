@@ -20,6 +20,7 @@ authRouter.get("/profile", authenticateToken, authController.profile);
 authRouter.post("/login", validate(...loginValidator), authController.login);
 authRouter.post("/logout", authController.logout);
 
+
 // admin auth
 authRouter.post(
   "/admin/register",
