@@ -67,9 +67,9 @@ const deleteUser = async (req: Request, res: Response) => {
 const bookSeat = async (req: Request, res: Response) =>
 {
   try {
-    const userId = Number(req.params);
+    const userId = req.user?.userId;
     const body = req.body as ICreateSeat;
-    const bookingSeat = await userService.bookSeat(userId, body);
+    const bookingSeat = await userService.bookSeat(userId!, body);
     console.log(bookingSeat);
     res.status(201).json("Seat book successfully.");
   } catch (error:any) {

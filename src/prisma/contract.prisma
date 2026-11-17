@@ -49,6 +49,7 @@ model Ticket {
   user_id             Int
   user                User                @relation(references: [id], fields: [user_id], onDelete: Cascade)
   occupied_seat       Int
+  
   total_amount        Int
   updatedAt           temporal.UpdatedAt
 }
